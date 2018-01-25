@@ -1,4 +1,4 @@
-{
+export default {
     "locations": [
         {
             "name": "Milsons Point",
