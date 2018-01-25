@@ -1,0 +1,3 @@
+rootProject.name = 'reactnativegeotagging'
+
+include ':app'
