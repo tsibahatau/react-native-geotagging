@@ -1,55 +1,85 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { StyleSheet, Text, View } from 'react-native';
+import store from '../store';
+import AppNavigator  from '../navigators/AppNavigator';
+
+import { StyleSheet, Text, View, Button } from 'react-native';
 import MapView from 'react-native-maps';
 
-class MapScreen extends Component {
+const region = {
+    latitude: -33.865143,
+    longitude: 151.209900,
+    latitudeDelta: 0.15,
+    longitudeDelta: 0.121,
+};
 
+
+class MapScreen extends Component {
+    handleAddPin = () => {
+        
+    }
     render() {  
       return(  
             <View style={styles.container}> 
-                <MapView
-                    style={styles.map}
-                    region={{
-                    latitude: -33.865143,
-                    longitude: 151.209900,
-                    latitudeDelta: 0.15,
-                    longitudeDelta: 0.121,
-                    }}
-                > 
-                  { this.props.locations.map(marker => (
-                        <MapView.Marker
-                            coordinate={ { latitude: marker.lat, longitude: marker.lng } }
-                            title={ marker.name }
-                        />
-                        )) }
-                </MapView>
+                <View style={styles.mapContainer}>
+                    <MapView
+                        style={styles.map}
+                        region={region}
+                        onLongPress={this.handleAddPin}
+
+                    > 
+                    { this.props.locations.map(marker => (
+                            <MapView.Marker
+                                coordinate={ { latitude: marker.lat, longitude: marker.lng } }
+                                title={ marker.name } 
+                                key={ marker.name}
+                            />
+                            )) }
+                    </MapView>
+                </View>
+                <View style={styles.listViewButton}>
+                    <Button
+                        onPress={ navigateToListView }
+                        title="View list"
+                        style={ styles.listViewButton }
+                        accessibilityLabel="view the list of markers"
+                    />
+                </View>
             </View>
       );
   }
 }
 
+
+const navigateToListView = () => {
+}
+
+
 const styles = StyleSheet.create({
     container: {
-      ...StyleSheet.absoluteFillObject,
-      height: 400,
-      width: 400,
-      justifyContent: 'flex-end',
+      height: '100%',
       alignItems: 'center',
     },
-    map: {
-      ...StyleSheet.absoluteFillObject,
+    mapContainer: {
+        height: '80%',
+        width: '100%'
     },
+    map: {
+        ...StyleSheet.absoluteFillObject
+    },
+
+    listViewButton: {
+        height: '20%',
+    }
   });
 
 const mapStateToProps = (state) => { 
-    console.log(state)
+    console.log(state);
     return ( 
     {
         locations: state.locations
-    }
-);
+    });
 }
 
-  export default connect(mapStateToProps)(MapScreen);
+export default connect(mapStateToProps)(MapScreen);
