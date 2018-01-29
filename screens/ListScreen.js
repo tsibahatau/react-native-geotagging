@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { StyleSheet, FlatList , View, Button} from 'react-native';
-import store from '../store';
+import { store } from '../store';
 
 import AppNavigator  from '../navigators/AppNavigator';
 import ListItem  from '../components/ListItem';
 
 
 class ListScreen extends Component {
-
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Locations Map',
+        headerTitleStyle : {textAlign: 'center', alignSelf:'center'},
+    });
     render() {  
       return(  
         <View>
@@ -19,13 +22,15 @@ class ListScreen extends Component {
                 renderItem={ this.renderItem }>
             </FlatList>
             <Button
-                onPress={ navigateToMap }
+                onPress={ this.navigateToMap }
                 title="View Map"
                 style={ styles.listViewButton }
              />
         </View>
       );
-  }
+    }
+
+    navigateToMap = () => this.props.navigation.navigate('Map');
 
     renderItem = ( { item } ) => {
         return (
@@ -37,9 +42,7 @@ class ListScreen extends Component {
         );
     }
 }
-const navigateToMap = () => {
-    store.dispatch(AppNavigator.router.getActionForPathAndParams('Map'));
-}
+
 
 
 

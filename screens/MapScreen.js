@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import store from '../store';
+import { store } from '../store';
 import AppNavigator  from '../navigators/AppNavigator';
 
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Modal } from 'react-native';
 import MapView from 'react-native-maps';
 
 const region = {
@@ -16,10 +16,27 @@ const region = {
 
 
 class MapScreen extends Component {
-    handleAddPin = () => {
-        
+
+
+    static navigationOptions = ({ navigation }) => ({
+        title: 'Locations Map',
+        headerTitleStyle : {textAlign: 'center', alignSelf:'center'},
+    });
+    
+    handleAddPin = (e) => {
+        const {latitude, longitude} = e.nativeEvent.coordinate;
+        console.log(e.nativeEvent);
+        const item = {lat:latitude, lng:longitude, name: ''}
+        this.props.navigation.navigate('AddLocation', { item })
     }
+    
+    openPinDetails = (item) => {
+       return () => this.props.navigation.navigate('Location', { item })
+    }
+    navigateToListView = () =>  this.props.navigation.navigate('List')
+    
     render() {  
+        console.log(this.props.locations);
       return(  
             <View style={styles.container}> 
                 <View style={styles.mapContainer}>
@@ -33,6 +50,7 @@ class MapScreen extends Component {
                             <MapView.Marker
                                 coordinate={ { latitude: marker.lat, longitude: marker.lng } }
                                 title={ marker.name } 
+                                onCalloutPress= { this.openPinDetails(marker) }
                                 key={ marker.name}
                             />
                             )) }
@@ -40,7 +58,7 @@ class MapScreen extends Component {
                 </View>
                 <View style={styles.listViewButton}>
                     <Button
-                        onPress={ navigateToListView }
+                        onPress={ this.navigateToListView }
                         title="View list"
                         style={ styles.listViewButton }
                         accessibilityLabel="view the list of markers"
@@ -50,11 +68,6 @@ class MapScreen extends Component {
       );
   }
 }
-
-
-const navigateToListView = () => {
-}
-
 
 const styles = StyleSheet.create({
     container: {
@@ -75,7 +88,6 @@ const styles = StyleSheet.create({
   });
 
 const mapStateToProps = (state) => { 
-    console.log(state);
     return ( 
     {
         locations: state.locations

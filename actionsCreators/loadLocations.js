@@ -23,7 +23,7 @@ export default () => {
             console.log(errorMessage)
             console.log(stackTrace);
         } 
-        FetchJson.fetchData(url , successCallback, errorCallback)
+        FetchJson.fetchData(url, successCallback, errorCallback)
     }
 }
 

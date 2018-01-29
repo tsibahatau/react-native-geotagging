@@ -1,24 +1,29 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Button, TextInput, StyleSheet, Text, View } from "react-native";
 import updateLocation from "../actionsCreators/updateLocation"
+import addLocation from "../actionsCreators/addLocation"
+
 import { store } from '../store';
 
-export default class LocationScreen extends Component {
+
+
+export default class AddLocationScreen extends Component {
     constructor(props) {
         super(props);
         const { item } = props.navigation.state.params;
         this.state = { item };
+        console.log(this.state);
     }
     
     
     static navigationOptions = ({ navigation }) => ({
-        headerTitle: 'Edit',
+        headerTitle: 'Add',
         headerTitleStyle : {textAlign: 'center', alignSelf:'center'},
         headerRight: <Button title="Save" onPress={navigation.state.params.handleSave} />
     });
 
     saveDetails = () => {
-        store.dispatch(updateLocation(this.state.item));
+        store.dispatch(addLocation(this.state.item));
         this.props.navigation.goBack();
     }
 
@@ -26,12 +31,12 @@ export default class LocationScreen extends Component {
       this.props.navigation.setParams({ handleSave: this.saveDetails });
     }
 
-    handleEditNote = (note) => {
+    handleEditName= (name) => {
         this.setState((previousState) => {
           return {
             item: {
               ...previousState.item,
-              note
+              name
             },
           };
         });
@@ -40,15 +45,12 @@ export default class LocationScreen extends Component {
     render() {
         return (
             <View style= {styles.outerContainer}>
-                <Text style={ styles.textLabel } >Name: { this.state.item.name }</Text>
-                <Text style={ styles.textLabel } >Note:</Text>
+                <Text style={ styles.textLabel } >Name:</Text>
                 <TextInput 
-                    style={ styles.noteInput } maxLength={140} 
-                    multiline = {true}
-                    numberOfLines = {4}
-                    onChangeText={(note) => this.handleEditNote(note)}
-                    value={this.state.item.note}
-                    autoFocus={true}
+                    style={ styles.noteInput } maxLength={40} 
+                    onChangeText={(name) => this.handleEditName(name)}
+                    value={this.state.item.name}
+                    autoFocus
                 />
             </View>)
             
@@ -63,9 +65,7 @@ const styles = StyleSheet.create({
         marginBottom: 5
     },
     noteInput: {
-        height: 140,
-        borderColor: '#000000',
-        borderWidth: 1,
+        height: 40,
         padding: 5
     }
   });
