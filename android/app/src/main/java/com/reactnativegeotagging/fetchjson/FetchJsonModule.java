@@ -19,7 +19,9 @@ public class FetchJsonModule extends ReactContextBaseJavaModule {
     private static final String TAG = "FetchJson";
 
     public FetchJsonModule(ReactApplicationContext reactContext) {
+
         super(reactContext);
+
     }
 
     @ReactMethod
@@ -35,7 +37,6 @@ public class FetchJsonModule extends ReactContextBaseJavaModule {
         call.enqueue(new retrofit2.Callback<Locations>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Log.w(TAG, "IMHERE");
                 if (response.isSuccessful()) {
                     try {
                         Locations locations = response.body();
