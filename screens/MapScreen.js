@@ -8,7 +8,7 @@ import { StyleSheet, Text, View, Button, Modal } from 'react-native';
 import MapView from 'react-native-maps';
 
 const region = {
-    latitude: -33.865143,
+    latitude: -33.865143, //middle of Sydney
     longitude: 151.209900,
     latitudeDelta: 0.15,
     longitudeDelta: 0.121,
