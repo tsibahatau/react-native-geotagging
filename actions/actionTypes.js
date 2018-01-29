@@ -1,4 +1,4 @@
 export const LOAD_LOCATIONS_SUCCESS = 'LOAD_LOCATIONS_SUCCESS';  
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';  
 export const ADD_LOCATION = 'ADD_LOCATION';  
-
+export const LOAD_FROM_STORAGE = 'persist/REHYDRATE';

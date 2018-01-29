@@ -25,7 +25,6 @@ class MapScreen extends Component {
     
     handleAddPin = (e) => {
         const {latitude, longitude} = e.nativeEvent.coordinate;
-        console.log(e.nativeEvent);
         const item = {lat:latitude, lng:longitude, name: ''}
         this.props.navigation.navigate('AddLocation', { item })
     }
@@ -36,7 +35,6 @@ class MapScreen extends Component {
     navigateToListView = () =>  this.props.navigation.navigate('List')
     
     render() {  
-        console.log(this.props.locations);
       return(  
             <View style={styles.container}> 
                 <View style={styles.mapContainer}>

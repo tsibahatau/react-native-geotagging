@@ -12,7 +12,6 @@ export default class AddLocationScreen extends Component {
         super(props);
         const { item } = props.navigation.state.params;
         this.state = { item };
-        console.log(this.state);
     }
     
     

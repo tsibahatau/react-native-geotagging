@@ -10,7 +10,6 @@ const url = 'https://s3-ap-southeast-2.amazonaws.com/com-cochlear-sabretooth-tak
 export default () => {
     return (dispatch) => {
         const successCallback = (data) =>  { 
-            console.log(data);
             let locations;
             try {
                 locations = (typeof data === "string") ? JSON.parse(data).locations : data.locations;
