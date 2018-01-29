@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { TouchableOpacity, Button, TextInput, StyleSheet, Text, View } from "react-native";
 import updateLocation from "../actionsCreators/updateLocation"
-import { store } from '../store';
+import { store, persistor } from '../store';
 
 export default class LocationScreen extends Component {
     constructor(props) {

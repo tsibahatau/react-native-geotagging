@@ -3,7 +3,7 @@ import { TouchableOpacity, Button, TextInput, StyleSheet, Text, View } from "rea
 import updateLocation from "../actionsCreators/updateLocation"
 import addLocation from "../actionsCreators/addLocation"
 
-import { store } from '../store';
+import { store, persistor }  from '../store';
 
 
 

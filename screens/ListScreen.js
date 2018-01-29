@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { StyleSheet, FlatList , View, Button} from 'react-native';
-import { store } from '../store';
+import { store, persistor }  from '../store'
 
 import AppNavigator  from '../navigators/AppNavigator';
 import ListItem  from '../components/ListItem';

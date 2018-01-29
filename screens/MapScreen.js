@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { store } from '../store';
+import { store, persistor }   from '../store';
 import AppNavigator  from '../navigators/AppNavigator';
 
 import { StyleSheet, Text, View, Button, Modal } from 'react-native';

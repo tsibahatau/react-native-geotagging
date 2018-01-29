@@ -1,4 +1,3 @@
 export default {  
-    locations: [],
-    ownLocations:[]
+    locations: []
 }
