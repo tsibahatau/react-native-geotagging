@@ -4,15 +4,15 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.reactnativegeotagging.fetchjson.beans.ApiService;
-import com.reactnativegeotagging.fetchjson.beans.Location;
-import com.reactnativegeotagging.fetchjson.beans.Locations;
+import com.reactnativegeotagging.fetchjson.model.ApiService;
+import com.reactnativegeotagging.fetchjson.model.Locations;
 
-import java.util.List;
-import android.util.Log;
-import retrofit2.Call;
-import retrofit2.Response;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FetchJsonModule extends ReactContextBaseJavaModule {
@@ -29,39 +29,31 @@ public class FetchJsonModule extends ReactContextBaseJavaModule {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
 
         ApiService service = retrofit.create(ApiService.class);
-        Call<Locations> call = service.getLocationsWrapper();
-
-        call.enqueue(new retrofit2.Callback<Locations>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        Locations locations = response.body();
-                        List<Location> locationList = locations.getLocations();
-                        // RN doesn't allow us to transfer arbitrary data across bridge
-                        //    so retrofit wasn't a good choice here
+        Observable<Locations> sydney = service.getLocationsWrapper();
+        sydney.subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Locations>() {
+                    @Override
+                    public void accept(Locations locations) throws Exception {
                         successCallback.invoke(locations.toString());
-                    } catch (Exception e){
-                        errorCallback.invoke("Error while parsing", e.getMessage());
+
                     }
-                } else {
-                    errorCallback.invoke("Error with server", response.message());
-                }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable error) throws Exception {
+                        errorCallback.invoke("Error with network", error.getMessage());                    }
+                });
+        }
 
-            }
-
-            @Override
-            public void onFailure(Call<Locations> call, Throwable t) {
-                errorCallback.invoke("Error with network", t.getMessage());
-            }
-        });
-    }
 
     @Override
     public String getName() {
         return TAG;
     }
+
+
 }

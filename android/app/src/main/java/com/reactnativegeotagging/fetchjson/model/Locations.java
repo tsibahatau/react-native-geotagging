@@ -1,4 +1,4 @@
-package com.reactnativegeotagging.fetchjson.beans;
+package com.reactnativegeotagging.fetchjson.model;
 
 import java.util.List;
 
