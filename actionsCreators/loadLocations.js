@@ -6,7 +6,6 @@ const { FetchJson } = NativeModules;
 const url = 'https://s3-ap-southeast-2.amazonaws.com/com-cochlear-sabretooth-takehometest/';
 
 
-
 export default () => {
     return (dispatch) => {
         const successCallback = (data) =>  { 
