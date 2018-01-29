@@ -3,16 +3,11 @@ import { connect } from 'react-redux';
 
 import { store, persistor }   from '../store';
 import AppNavigator  from '../navigators/AppNavigator';
-
+import { REGION } from '../constants'
 import { StyleSheet, Text, View, Button, Modal } from 'react-native';
 import MapView from 'react-native-maps';
 
-const region = {
-    latitude: -33.865143, //middle of Sydney
-    longitude: 151.209900,
-    latitudeDelta: 0.15,
-    longitudeDelta: 0.121,
-};
+
 
 
 class MapScreen extends Component {
@@ -40,7 +35,7 @@ class MapScreen extends Component {
                 <View style={styles.mapContainer}>
                     <MapView
                         style={styles.map}
-                        region={region}
+                        region={REGION}
                         onLongPress={this.handleAddPin}
 
                     > 
