@@ -1,13 +1,13 @@
 import * as types from './actionTypes'
 
-export function loadLocationsSuccess(data) {  
-    return {type: types.LOAD_LOCATIONS_SUCCESS, data};
+export function loadLocationsSuccess(payload) {  
+    return {type: types.LOAD_LOCATIONS_SUCCESS, payload};
 }
 
-export function updateLocation(data) {  
-    return {type: types.UPDATE_LOCATION, data};
+export function updateLocation(payload) {  
+    return {type: types.UPDATE_LOCATION, payload};
 }
 
-export function addLocation(data) {  
-    return {type: types.ADD_LOCATION, data};
+export function addLocation(payload) {  
+    return {type: types.ADD_LOCATION, payload};
 }

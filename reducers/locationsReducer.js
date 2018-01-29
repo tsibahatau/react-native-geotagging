@@ -10,16 +10,16 @@ export default function locationsReducer(state = initialState.locations, action)
       action.payload && (newState = [..._.filter(action.payload.locations, (item) => {return !!item})])
       return newState;
     case types.LOAD_LOCATIONS_SUCCESS:
-      let merged = _.unionBy(state, action.data, 'name'); //merge two arrays by name, preserve from state
+      let merged = _.unionBy(state, action.payload, 'name'); //merge two arrays by name, preserve from state
       return [...merged];
     case types.UPDATE_LOCATION:
-      const index = state.findIndex((location) => location.name === action.data.name);
+      const index = state.findIndex((location) => location.name === action.payload.name);
       if(index !== -1) {
-        newState[index] = action.data;
+        newState[index] = action.payload;
       }
       return newState;
     case types.ADD_LOCATION:
-      return [...newState,action.data];
+      return [...newState,action.payload];
     default: 
       return newState;
   }

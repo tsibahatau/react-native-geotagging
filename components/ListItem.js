@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 import { TouchableOpacity, StyleSheet, Text, View } from "react-native";
 
-import { store, persistor }   from '../store';
+import { store }   from '../store';
 import AppNavigator  from '../navigators/AppNavigator';
 
 
